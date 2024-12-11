@@ -1,2 +1,2 @@
-# gritSolutions
+# Solution
 Proposed java exercise
