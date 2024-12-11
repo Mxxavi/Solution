@@ -1,8 +1,6 @@
 package com.mx.gritsolutions.controller;
 
-import com.mx.gritsolutions.entities.Item;
 import com.mx.gritsolutions.entities.Stock;
-import com.mx.gritsolutions.service.ItemService;
 import com.mx.gritsolutions.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

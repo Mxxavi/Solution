@@ -1,8 +1,6 @@
 package com.mx.gritsolutions.controller;
 
-import com.mx.gritsolutions.entities.Order;
 import com.mx.gritsolutions.entities.User;
-import com.mx.gritsolutions.service.OrderService;
 import com.mx.gritsolutions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

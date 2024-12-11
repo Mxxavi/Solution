@@ -1,16 +1,20 @@
 package com.mx.gritsolutions.service;
 
-import com.mx.gritsolutions.entities.*;
-import com.mx.gritsolutions.repositories.*;
+import com.mx.gritsolutions.entities.Item;
+import com.mx.gritsolutions.entities.Order;
+import com.mx.gritsolutions.entities.Stock;
+import com.mx.gritsolutions.entities.User;
+import com.mx.gritsolutions.repositories.ItemRepository;
+import com.mx.gritsolutions.repositories.OrderRepository;
+import com.mx.gritsolutions.repositories.StockRepository;
+import com.mx.gritsolutions.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Service
 public class OrderService {
