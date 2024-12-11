@@ -1,0 +1,33 @@
+<configuration>
+
+    <!-- Define o nível global de log (opcional) -->
+    <root level="DEBUG">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="File"/>
+    </root>
+    <root level="INFO">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="File"/>
+    </root>
+    <root level="ERROR">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="File"/>
+    </root>
+
+    <!-- Appender para a consola -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para o arquivo com append -->
+    <appender name="File" class="ch.qos.logback.core.FileAppender">
+        <file>logs/app.log</file>  <!-- Define o caminho do arquivo de log -->
+        <append>true</append>      <!-- Garantir que os logs serão adicionados ao arquivo (append) -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+</configuration>
