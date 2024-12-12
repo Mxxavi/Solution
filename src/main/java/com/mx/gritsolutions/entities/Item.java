@@ -16,4 +16,12 @@ public class Item implements Serializable {
     private String name;
     @Column(nullable = false, unique = true)
     private String code;
+
+    public Item() {
+    }
+
+    public Item(String inputName, String inputCode) {
+        this.name = inputName;
+        this.code = inputCode;
+    }
 }

@@ -19,4 +19,13 @@ public class Order {
     @ManyToOne
     private User user;
     private boolean orderIsCompleted;
+
+    public Order() {}
+
+    public Order(int inputQuantity, Item inputItem, User inputUser, boolean inputOrderIsComplete) {
+        this.quantity = inputQuantity;
+        this.item = inputItem;
+        this.user = inputUser;
+        this.orderIsCompleted = inputOrderIsComplete;
+    }
 }

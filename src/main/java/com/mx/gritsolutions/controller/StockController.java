@@ -19,11 +19,6 @@ public class StockController {
         return stockService.createStock(quantity,itemId);
     }
 
-    @PostMapping("/changeStock")
-    public Stock updateStock(@RequestParam int quantity, @RequestParam Long itemId) {
-        return stockService.updateStock(quantity,itemId);
-    }
-
     @GetMapping
     public List<Stock> getAll() {
         return stockService.getAll();

@@ -4,6 +4,8 @@ import com.mx.gritsolutions.entities.Item;
 import com.mx.gritsolutions.entities.Stock;
 import com.mx.gritsolutions.repositories.ItemRepository;
 import com.mx.gritsolutions.repositories.StockRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ import java.util.Optional;
 
 @Service
 public class StockService {
+
+    static Logger logger = LoggerFactory.getLogger(StockService.class.getName());
+
     @Autowired
     private StockRepository stockRepository;
 
@@ -20,30 +25,28 @@ public class StockService {
     private ItemRepository itemRepository;
 
     public Stock createStock(int quantity, Long itemId){
-        Optional<Item> itemOptional = itemRepository.findById(itemId);
-        if(itemOptional.isEmpty()){
-            throw new RuntimeException("Item not found!");
-        }
-        Stock stock = stockRepository.findStockByItemId(itemId);
-        if(stock !=null){
-            throw new RuntimeException("There is already a stock created for that Item!");
-        }
-
-        return stockRepository.save(new Stock(quantity, LocalDateTime.now(),itemOptional.get()));
+        return saveStock(quantity,itemId);
     }
 
-    public Stock updateStock(int quantity, Long itemId){
+    public Item findItem(Long itemId){
         Optional<Item> itemOptional = itemRepository.findById(itemId);
         if(itemOptional.isEmpty()){
+            logger.error("Item not found!");
             throw new RuntimeException("Item not found!");
         }
-        Stock stock = stockRepository.findStockByItemId(itemId);
-        if(stock !=null){
-            return stockRepository.save(new Stock(stock.getId(),quantity, LocalDateTime.now(),itemOptional.get()));
-        }else {
-            throw new RuntimeException("NO stock created for that Item!");
-        }
+        return  itemOptional.get();
+    }
 
+    public Stock saveStock(int quantity, Long itemId){
+        Item item = findItem(itemId);
+        Stock stock = stockRepository.findStockByItemId(item.getId());
+        if(stock !=null){
+            logger.info("Existing stock for that Item! update stock for item {}", item.getName());
+            return stockRepository.save(new Stock(String.valueOf(stock.getId()),quantity, LocalDateTime.now(),item));
+        }else {
+            logger.info("NO stock created for that Item! Created new stock for item {}", item.getName());
+            return stockRepository.save(new Stock(null,quantity, LocalDateTime.now(),item));
+        }
     }
 
     public List<Stock> getAll(){

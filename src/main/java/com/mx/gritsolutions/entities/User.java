@@ -1,6 +1,7 @@
 package com.mx.gritsolutions.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
@@ -12,6 +13,8 @@ public class User {
     private Long id;
     private String name;
     private String mail;
+
+    public User() {}
 
     public User(String inputName, String inputMail) {
         this.name = inputName;

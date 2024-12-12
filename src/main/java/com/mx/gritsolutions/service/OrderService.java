@@ -62,21 +62,26 @@ public class OrderService {
 
     public void verifyUpdateStock(Order order){
         Stock stockMovement = stockRepository.findStockByItemId(order.getItem().getId());
-        int stockQuantity = stockMovement.getQuantity();
-        if(stockQuantity >= order.getQuantity()){
-            //Save order new status
-            order.setOrderIsCompleted(true);
-            orderRepository.save(order);
-            logger.info("Successfully created order: {}", order);
-            //update stock
-            stockMovement.setQuantity(stockMovement.getQuantity() - order.getQuantity());
-            stockRepository.save(stockMovement);
-            logger.info("Successfully updated stock: {}", stockMovement);
-            //Send mail
-            sendOrderCompletionEmail(order.getUser());
+        if(stockMovement != null){
+            int stockQuantity = stockMovement.getQuantity();
+            if(stockQuantity >= order.getQuantity()){
+                //Save order new status
+                order.setOrderIsCompleted(true);
+                orderRepository.save(order);
+                logger.info("Successfully created order: {}", order);
+                //update stock
+                stockMovement.setQuantity(stockMovement.getQuantity() - order.getQuantity());
+                stockRepository.save(stockMovement);
+                logger.info("Successfully updated stock: {}", stockMovement);
+                //Send mail
+                sendOrderCompletionEmail(order.getUser());
+            }else{
+                logger.error("Create Order - Insufficient stock to complete the order, stockQuantity:'{}'", stockQuantity);
+                throw new RuntimeException("Insufficient stock to complete the order.");
+            }
         }else{
-            logger.error("Create Order - Insufficient stock to complete the order, stockQuantity:'{}'", stockQuantity);
-            throw new RuntimeException("Insufficient stock to complete the order.");
+            logger.error("Create Order - No stock to complete the order");
+            throw new RuntimeException("No stock to complete the order.");
         }
     }
 
